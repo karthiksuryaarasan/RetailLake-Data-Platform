@@ -1,0 +1,23 @@
+# Core
+pandas==2.1.4
+numpy==1.26.3
+pyarrow==14.0.2
+
+# Delta Lake (FREE — open source)
+deltalake==0.15.1
+
+# Dashboard (FREE — deploy on Streamlit Cloud)
+streamlit==1.30.0
+plotly==5.18.0
+
+# Testing
+pytest==7.4.4
+
+# Code quality
+flake8==7.0.0
+
+# Airflow (optional — for local orchestration)
+# apache-airflow==2.8.1
+
+# Utilities
+python-dotenv==1.0.0

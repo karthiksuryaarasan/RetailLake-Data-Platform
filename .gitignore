@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+data/
+.airflow/
+logs/
+*.log
+.delta/
+.parquet/
+.ipynb_checkpoints/
+.pytest_cache/

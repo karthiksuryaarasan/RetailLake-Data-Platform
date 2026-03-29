@@ -1,0 +1,82 @@
+# SETUP GUIDE — Windows Step by Step
+
+## Step 1: Check Python version
+Open Command Prompt (CMD) and run:
+    python --version
+
+You need Python 3.9 or higher.
+If not installed: https://python.org/downloads
+
+## Step 2: Create project folder
+    mkdir ecommerce_platform
+    cd ecommerce_platform
+
+## Step 3: Create virtual environment
+    python -m venv venv
+    venv\Scripts\activate
+
+You should see (venv) at the start of your command line.
+
+## Step 4: Copy all project files into this folder
+(Copy all the files from the zip/code into ecommerce_platform/)
+
+## Step 5: Install all packages
+    pip install -r requirements.txt
+
+This will take 2-3 minutes. Let it finish.
+
+## Step 6: Run the full pipeline
+    python run_pipeline.py
+
+Expected output:
+    ✅ Customers: 500 rows
+    ✅ Products: 100 rows
+    ✅ Orders: 100,000 rows
+    ✅ EXTRACT COMPLETE
+    ✅ TRANSFORM COMPLETE
+    ✅ LOAD COMPLETE
+
+## Step 7: Launch the dashboard
+    streamlit run dashboard/app.py
+
+Opens automatically at: http://localhost:8501
+
+## Step 8: Run tests
+    pytest tests/ -v
+
+Should show 25+ tests passing.
+
+## Step 9: Push to GitHub
+    git init
+    git add .
+    git commit -m "feat: complete ecommerce data platform"
+    git branch -M main
+    git remote add origin https://github.com/YOUR_USERNAME/modern-data-platform-ecommerce.git
+    git push -u origin main
+
+## Step 10: Deploy dashboard for FREE
+1. Go to https://share.streamlit.io
+2. Sign in with GitHub
+3. Click "New app"
+4. Select your repo
+5. Set main file: dashboard/app.py
+6. Click Deploy
+
+Your dashboard will be live at:
+    https://YOUR_APP_NAME.streamlit.app
+
+Share this URL in your resume and LinkedIn!
+
+## Common Windows Issues
+
+Issue: "deltalake install fails"
+Fix: pip install deltalake --pre
+
+Issue: "venv not activating"
+Fix: Set-ExecutionPolicy RemoteSigned (in PowerShell as admin)
+
+Issue: "streamlit not found"
+Fix: pip install streamlit
+
+## Need Help?
+Every error has a fix. Don't panic, just read the error message carefully.
