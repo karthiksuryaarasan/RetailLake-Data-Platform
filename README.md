@@ -1,4 +1,4 @@
-# 🛒 Modern Ecommerce Data Platform
+# RetailLake — End-to-End Lakehouse Data Platform
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue?style=flat-square&logo=python)
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-0.15-blue?style=flat-square)
@@ -90,8 +90,8 @@
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/karthiksuryaarasan/modern-data-platform-ecommerce
-cd modern-data-platform-ecommerce
+git clone https://github.com/karthiksuryaarasan/RetailLake-Data-Platform
+cd RetailLake-Data-Platform
 ```
 
 ### 2. Install dependencies
@@ -119,7 +119,7 @@ pytest tests/ -v
 ## 📁 Project Structure
 
 ```
-modern-data-platform-ecommerce/
+RetailLake-Data-Platform/
 │
 ├── pipeline/
 │   ├── generate_data.py    # Synthetic data → Delta Lake
@@ -232,6 +232,18 @@ pipeline_end
 | Accepted values | fact_orders | Status only valid values |
 | Range check | fact_orders | Quantity (1–100), Discount (0–1) |
 | Row count | All tables | Non-empty after each stage |
+
+---
+
+## 📊 Streamlit Dashboard
+
+![RetailLake Dashboard](images/dashboard.png)
+
+End-to-End analytics dashboard built using Streamlit showing:
+- Revenue trends
+- Customer insights
+- Order analytics
+- KPI metrics
 
 ---
 
