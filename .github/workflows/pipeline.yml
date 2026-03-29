@@ -57,15 +57,18 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Generate synthetic data
-        run: python -c "
-          from pipeline.generate_data import *
-          customers = generate_customers()
-          products  = generate_products()
-          orders    = generate_orders(customers, products)
-          write_to_delta(customers, 'data/raw/delta/customers', 'Customers')
-          write_to_delta(products,  'data/raw/delta/products',  'Products')
-          write_to_delta(orders,    'data/raw/delta/orders',    'Orders')
-          "
+  run: |
+    python - <<EOF
+    from pipeline.generate_data import *
+
+    customers = generate_customers()
+    products = generate_products()
+    orders = generate_orders(customers, products)
+
+    write_to_delta(customers, "data/raw/delta/customers", "Customers")
+    write_to_delta(products, "data/raw/delta/products", "Products")
+    write_to_delta(orders, "data/raw/delta/orders", "Orders")
+    EOF
 
       - name: Run Extract
         run: python -m pipeline.extract
