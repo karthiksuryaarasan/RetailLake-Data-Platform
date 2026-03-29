@@ -235,17 +235,26 @@ pipeline_end
 
 ---
 
-## 📊 Streamlit Dashboard
+## 📊 Dashboard Preview
 
-![RetailLake Dashboard](images/dashboard.png)
+### Analytics Dashboard
 
-End-to-End analytics dashboard built using Streamlit showing:
-- Revenue trends
-- Customer insights
-- Order analytics
-- KPI metrics
+![Dashboard 1](images/dashboard_img_1.jpeg)
+
+![Dashboard 2](images/dashboard_img_2.jpeg)
+
+![Dashboard 3](images/dashboard_img_3.jpeg)
 
 ---
+
+## ⚙️ CI/CD Pipeline
+
+GitHub Actions automated pipeline execution
+
+![CI/CD](images/workflow_cicd.jpeg)
+
+---
+
 
 ## 👨‍💻 Author
 
