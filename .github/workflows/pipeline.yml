@@ -6,13 +6,10 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 1 * * *'   # Daily 1 AM UTC
+    - cron: '0 1 * * *'
 
 jobs:
 
-  # ─────────────────────────────────────────────
-  # Job 1: Lint & Unit Tests
-  # ─────────────────────────────────────────────
   test:
     name: Lint & Unit Tests
     runs-on: ubuntu-latest
@@ -21,30 +18,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-          cache: pip
 
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      - name: Lint with flake8
+      - name: Lint
         run: |
           pip install flake8
-          flake8 pipeline/ --max-line-length=100 --ignore=E501,W503 || true
+          flake8 pipeline/ || true
 
-      - name: Run unit tests
+      - name: Run tests
         run: |
           pip install pytest
-          pytest tests/ -v --tb=short || true
+          pytest tests/ -v || true
 
 
-  # ─────────────────────────────────────────────
-  # Job 2: Run ELT Pipeline
-  # ─────────────────────────────────────────────
   run-pipeline:
     name: Run ELT Pipeline
     runs-on: ubuntu-latest
@@ -54,74 +47,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-          cache: pip
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-
-      # Generate synthetic data
-      - name: Generate synthetic data
         run: |
-          python -c "
-from pipeline.generate_data import generate_customers, generate_products, generate_orders, write_to_delta
+          pip install -r requirements.txt
 
-customers = generate_customers()
-products = generate_products()
-orders = generate_orders(customers, products)
+      - name: Run Full Pipeline
+        run: |
+          python run_pipeline.py
 
-write_to_delta(customers, 'data/raw/delta/customers', 'Customers')
-write_to_delta(products, 'data/raw/delta/products', 'Products')
-write_to_delta(orders, 'data/raw/delta/orders', 'Orders')
-"
-
-
-      # Extract
-      - name: Run Extract
-        run: python -m pipeline.extract
-
-
-      # Transform
-      - name: Run Transform
-        run: python -m pipeline.transform
-
-
-      # Load
-      - name: Run Load + Quality Checks
-        run: python -m pipeline.load
-
-
-      # Upload Artifacts
-      - name: Upload pipeline artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: pipeline-outputs
-          path: |
-            data/mart/
-            *.log
-          retention-days: 7
+          name: pipeline-data
+          path: data/
+          retention-days: 5
 
 
-  # ─────────────────────────────────────────────
-  # Job 3: Deploy Dashboard
-  # ─────────────────────────────────────────────
   deploy:
-    name: Deploy Streamlit Dashboard
+    name: Deploy Dashboard
     runs-on: ubuntu-latest
     needs: run-pipeline
-    if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Deployment Notification
+      - name: Deployment message
         run: |
-          echo "✅ Pipeline Passed"
-          echo "🚀 Dashboard Ready"
-          echo "📊 Streamlit Deployment Complete"
+          echo "Pipeline Successful"
+          echo "Dashboard Ready"
